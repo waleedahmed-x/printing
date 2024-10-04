@@ -8,10 +8,14 @@ $appbarHeight: 70px;
   position: fixed;
   width: 100%;
   height: $appbarHeight;
-  justify-content: space-between;
+  //   justify-content: space-between;
   align-items: center;
   background-color: #333;
   color: #fff;
   padding: 0.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  .dropdown {
+    display: flex;
+    flex-direction: column;
+  }
 }
