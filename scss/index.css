@@ -2,16 +2,16 @@
   margin: 0px;
   padding: 0px;
 }
-$appbarHeight: 70px;
+
 .appbar {
   display: flex;
   position: fixed;
   width: 100%;
-  height: $appbarHeight;
+  height: 70px;
   justify-content: space-between;
   align-items: center;
   background-color: #333;
   color: #fff;
   padding: 0.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
+}/*# sourceMappingURL=index.css.map */
