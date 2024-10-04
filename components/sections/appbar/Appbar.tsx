@@ -3,7 +3,7 @@ import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuSeparator,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
@@ -18,14 +18,17 @@ export default function Appbar() {
             <p>Open</p>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
-            {/* <DropdownMenuLabel>Panel Position</DropdownMenuLabel> */}
-            {/* <DropdownMenuSeparator /> */}
+            <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
             <div className="flex flex-col ml-[20px]">
-              <Link href="/">Top</Link>
-              <DropdownMenuSeparator />
-              <Link href="/">Bottom</Link>
-              <DropdownMenuSeparator />
-              <Link href="/">Right</Link>
+              <DropdownMenuLabel>
+                <Link href="/">Top</Link>
+              </DropdownMenuLabel>
+              <DropdownMenuLabel>
+                <Link href="/">Bottom</Link>
+              </DropdownMenuLabel>
+              <DropdownMenuLabel>
+                <Link href="/">Right</Link>
+              </DropdownMenuLabel>
             </div>
           </DropdownMenuContent>
         </DropdownMenu>
