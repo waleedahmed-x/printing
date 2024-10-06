@@ -19,12 +19,21 @@ interface TextItem {
   isEditing: boolean;
 }
 
+interface UploadedImage {
+  id: string;
+  image: HTMLImageElement;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 export default function Canvas() {
-  const [image, setImage] = useState<HTMLImageElement | null>(null);
+  const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
   const [textItems, setTextItems] = useState<TextItem[]>([]);
-  const imageRef = useRef(null);
   const transformerRef = useRef(null);
-  const [selectedShape, setSelectedShape] = useState(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [selectedShape, setSelectedShape] = useState<any>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -33,7 +42,15 @@ export default function Canvas() {
       const img = new window.Image();
       img.src = url;
       img.onload = () => {
-        setImage(img);
+        const newImage = {
+          id: Date.now().toString(),
+          image: img,
+          x: 150,
+          y: 150,
+          width: 300,
+          height: 300,
+        };
+        setUploadedImages((prev) => [...prev, newImage]);
       };
     }
   };
@@ -75,7 +92,6 @@ export default function Canvas() {
     );
   };
 
-  // New handler to update text position on drag end
   const handleDragEnd = (id: string, newX: number, newY: number) => {
     setTextItems((prev) =>
       prev.map((item) =>
@@ -91,26 +107,18 @@ export default function Canvas() {
   };
 
   useEffect(() => {
-    if (selectedShape && transformerRef.current) {
-      // @ts-expect-error lkjn
-      transformerRef.current.nodes([selectedShape]);
-      // @ts-expect-error lknj
-      transformerRef.current.getLayer().batchDraw();
-    }
-  }, [selectedShape]);
-
-  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedShape && (e.key === "Delete" || e.key === "Backspace")) {
         if (e.shiftKey) {
-          // @ts-expect-error lkjnk
           if (selectedShape.attrs.id) {
+            // Remove text
             setTextItems((prev) =>
-              // @ts-expect-error ;kjn
               prev.filter((item) => item.id !== selectedShape.attrs.id)
             );
-          } else if (selectedShape === imageRef.current) {
-            setImage(null);
+            // Remove image
+            setUploadedImages((prev) =>
+              prev.filter((img) => img.id !== selectedShape.attrs.id)
+            );
           }
           setSelectedShape(null);
         }
@@ -122,6 +130,15 @@ export default function Canvas() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
+  }, [selectedShape, uploadedImages]);
+
+  useEffect(() => {
+    if (selectedShape && transformerRef.current) {
+      // @ts-expect-error kjn
+      transformerRef.current.nodes([selectedShape]);
+      // @ts-expect-error kjn
+      transformerRef.current.getLayer().batchDraw();
+    }
   }, [selectedShape]);
 
   return (
@@ -133,7 +150,6 @@ export default function Canvas() {
           onChange={handleFileChange}
           style={{ marginBottom: "10px" }}
         />
-
         <button onClick={addText} style={{ marginBottom: "10px" }}>
           Add Text
         </button>
@@ -150,19 +166,20 @@ export default function Canvas() {
         }}
       >
         <Layer>
-          {image && (
+          {uploadedImages.map((img) => (
             <KonvaImage
-              ref={imageRef}
-              image={image}
-              x={150}
-              y={150}
-              width={300}
-              height={300}
+              key={img.id}
+              id={img.id}
+              image={img.image}
+              x={img.x}
+              y={img.y}
+              width={img.width}
+              height={img.height}
               draggable
-              onClick={() => handleSelect(imageRef.current)}
-              onTap={() => handleSelect(imageRef.current)}
+              onClick={(e) => handleSelect(e.target)}
+              onTap={(e) => handleSelect(e.target)}
             />
-          )}
+          ))}
 
           {textItems.map((item) => (
             <React.Fragment key={item.id}>
@@ -179,7 +196,7 @@ export default function Canvas() {
                   onDblClick={() => handleTextDoubleClick(item.id)}
                   onDragEnd={(e) =>
                     handleDragEnd(item.id, e.target.x(), e.target.y())
-                  } // Update text position on drag end
+                  }
                 />
               ) : (
                 <Html>
