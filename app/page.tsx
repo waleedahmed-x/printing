@@ -1,63 +1,10 @@
-import Appbar from "@/components/sections/appbar/Appbar";
 import React from "react";
-import "@/scss/index.css";
+import Canvas from "@/components/sections/canvas/Canvas";
 export default function Home() {
   return (
-    <>
-      <Appbar />
+    <div className="parent">
+      <Canvas />
       <p>Landing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-      <p>Start2 Finish Printing</p>
-    </>
+    </div>
   );
 }

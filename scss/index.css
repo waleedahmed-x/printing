@@ -17,4 +17,30 @@
 .appbar .dropdown {
   display: flex;
   flex-direction: column;
+}
+
+.parent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+}
+.parent .playground-parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70px;
+  width: 100%;
+}
+.parent .playground-parent .input-container {
+  display: flex;
+  flex-direction: column;
+}
+.parent .playground-parent .playground {
+  width: 80%;
+  height: 80vh;
+  border: 1px solid red;
+  background: #ccc;
 }/*# sourceMappingURL=index.css.map */

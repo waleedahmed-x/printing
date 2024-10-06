@@ -19,3 +19,28 @@ $appbarHeight: 70px;
     flex-direction: column;
   }
 }
+.parent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  .playground-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: $appbarHeight;
+    width: 100%;
+    .input-container {
+      display: flex;
+      flex-direction: column;
+    }
+    .playground {
+      width: 80%;
+      height: 80vh;
+      border: 1px solid red;
+      background: #ccc;
+    }
+  }
+}
