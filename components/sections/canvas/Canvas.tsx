@@ -75,11 +75,26 @@ export default function Canvas() {
     );
   };
 
+  // New handler to update text position on drag end
+  const handleDragEnd = (id: string, newX: number, newY: number) => {
+    setTextItems((prev) =>
+      prev.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              x: newX,
+              y: newY,
+            }
+          : item
+      )
+    );
+  };
+
   useEffect(() => {
     if (selectedShape && transformerRef.current) {
-      // @ts-expect-error  bhanchod
+      // @ts-expect-error lkjn
       transformerRef.current.nodes([selectedShape]);
-      //   @ts-expect-error bhanchod
+      // @ts-expect-error lknj
       transformerRef.current.getLayer().batchDraw();
     }
   }, [selectedShape]);
@@ -88,10 +103,10 @@ export default function Canvas() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedShape && (e.key === "Delete" || e.key === "Backspace")) {
         if (e.shiftKey) {
-          // @ts-expect-error  bhanchod
+          // @ts-expect-error lkjnk
           if (selectedShape.attrs.id) {
             setTextItems((prev) =>
-              // @ts-expect-error  bhanchod
+              // @ts-expect-error ;kjn
               prev.filter((item) => item.id !== selectedShape.attrs.id)
             );
           } else if (selectedShape === imageRef.current) {
@@ -162,6 +177,9 @@ export default function Canvas() {
                   onClick={(e) => handleSelect(e.target)}
                   onTap={(e) => handleSelect(e.target)}
                   onDblClick={() => handleTextDoubleClick(item.id)}
+                  onDragEnd={(e) =>
+                    handleDragEnd(item.id, e.target.x(), e.target.y())
+                  } // Update text position on drag end
                 />
               ) : (
                 <Html>
