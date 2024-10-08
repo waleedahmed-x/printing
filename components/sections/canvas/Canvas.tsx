@@ -1,9 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useRef, useEffect, useState } from "react";
-import { Layer, Stage, Text, Transformer } from "react-konva";
+import {
+  Layer,
+  Stage,
+  Text,
+  Transformer,
+  Image as KonvaImage,
+} from "react-konva";
 import { Html } from "react-konva-utils";
 import { useText } from "@/hooks/useText";
+import { useImages } from "@/hooks/useImage";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -21,6 +28,7 @@ export default function Canvas() {
 
   const {
     textItems,
+    setTextItems, // to update textItems on deletion
     addText,
     handleTextDoubleClick,
     handleTextChange,
@@ -29,6 +37,8 @@ export default function Canvas() {
     changeFontFamily,
     changeTextColor,
   } = useText();
+
+  const { uploadedImages, setUploadedImages, handleFileChange } = useImages();
 
   const handleSelect = (node: any) => {
     setSelectedNode(node);
@@ -49,6 +59,37 @@ export default function Canvas() {
     }
   };
 
+  const handleDeleteSelectedNode = () => {
+    if (selectedNode) {
+      const nodeId = selectedNode.id();
+      if (selectedNode.className === "Text") {
+        setTextItems((prevTextItems) =>
+          prevTextItems.filter((item) => item.id !== nodeId)
+        );
+      } else if (selectedNode.className === "Image") {
+        setUploadedImages((prevImages) =>
+          prevImages.filter((img) => img.id !== nodeId)
+        );
+      }
+      setSelectedNode(null);
+    }
+  };
+
+  // Add an event listener for 'Shift + Delete' or 'Shift + Backspace'
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.shiftKey && (e.key === "Delete" || e.key === "Backspace")) {
+        handleDeleteSelectedNode();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedNode]);
+
   useEffect(() => {
     if (selectedNode && transformerRef.current) {
       transformerRef.current.nodes([selectedNode]);
@@ -62,6 +103,7 @@ export default function Canvas() {
         <button onClick={addText} style={{ marginBottom: "10px" }}>
           Add Text
         </button>
+
         {/* shadcn/ui Select Component */}
         <Select value={selectedFont} onValueChange={handleFontChange}>
           <SelectTrigger className="w-[180px]">
@@ -71,7 +113,6 @@ export default function Canvas() {
             <SelectItem value="Arial">Arial</SelectItem>
             <SelectItem value="Times New Roman">Times New Roman</SelectItem>
             <SelectItem value="Courier New">Courier New</SelectItem>
-            {/* Add more fonts if needed */}
           </SelectContent>
         </Select>
 
@@ -79,6 +120,13 @@ export default function Canvas() {
           type="color"
           value={selectedColor}
           onChange={handleColorChange}
+          style={{ marginLeft: "10px" }}
+        />
+
+        <Input
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
           style={{ marginLeft: "10px" }}
         />
       </div>
@@ -94,6 +142,7 @@ export default function Canvas() {
         }}
       >
         <Layer>
+          {/* Render text items */}
           {textItems.map((item) => (
             <React.Fragment key={item.id}>
               {!item.isEditing ? (
@@ -135,6 +184,32 @@ export default function Canvas() {
             </React.Fragment>
           ))}
 
+          {/* Render uploaded images */}
+          {uploadedImages.map((image) => (
+            <KonvaImage
+              key={image.id}
+              id={image.id} // Ensure the image has an id
+              image={image.image}
+              x={image.x}
+              y={image.y}
+              width={image.width}
+              height={image.height}
+              draggable
+              onClick={(e) => handleSelect(e.target)}
+              onDragEnd={(e) => {
+                // Allow image dragging
+                const newX = e.target.x();
+                const newY = e.target.y();
+                setUploadedImages((prev) =>
+                  prev.map((img) =>
+                    img.id === image.id ? { ...img, x: newX, y: newY } : img
+                  )
+                );
+              }}
+            />
+          ))}
+
+          {/* Transformer for resizing/moving selected node */}
           {selectedNode && (
             <Transformer
               ref={transformerRef}
