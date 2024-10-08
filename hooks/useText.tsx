@@ -73,6 +73,7 @@ export function useText() {
 
   return {
     textItems,
+    setTextItems,
     addText,
     handleTextDoubleClick,
     handleTextChange,

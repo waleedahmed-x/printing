@@ -28,7 +28,7 @@ export default function Canvas() {
 
   const {
     textItems,
-    setTextItems, // to update textItems on deletion
+    setTextItems,
     addText,
     handleTextDoubleClick,
     handleTextChange,
@@ -171,6 +171,7 @@ export default function Canvas() {
                       left: item.x,
                       fontSize: item.fontSize,
                       fontFamily: item.fontFamily,
+                      // fontWeight: "bold",
                       color: item.fill,
                       background: "none",
                       border: "none",
