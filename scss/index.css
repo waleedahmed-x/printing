@@ -33,14 +33,24 @@
   align-items: center;
   padding-top: 70px;
   width: 100%;
+  height: 100vh;
 }
-.parent .playground-parent .input-container {
+.parent .playground-parent .controls {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
   flex-direction: column;
+}
+.parent .playground-parent .controls input {
+  width: 200px;
+}
+.parent .playground-parent .controls button {
+  width: 200px;
 }
 .parent .playground-parent .playground {
   width: 80%;
-  height: 80vh;
+  height: 600px;
   border: 1px solid red;
   background: #ccc;
 }/*# sourceMappingURL=index.css.map */

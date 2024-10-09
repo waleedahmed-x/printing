@@ -32,13 +32,23 @@ $appbarHeight: 70px;
     align-items: center;
     padding-top: $appbarHeight;
     width: 100%;
-    .input-container {
+    height: 100vh;
+    .controls {
       display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 20%;
       flex-direction: column;
+      & input {
+        width: 200px;
+      }
+      & button {
+        width: 200px;
+      }
     }
     .playground {
       width: 80%;
-      height: 80vh;
+      height: 600px;
       border: 1px solid red;
       background: #ccc;
     }

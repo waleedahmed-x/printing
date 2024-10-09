@@ -19,6 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { fontFamilies } from "@/utils/fontsFamilies";
 
 export default function Canvas() {
   const transformerRef = useRef<any>(null);
@@ -75,7 +77,6 @@ export default function Canvas() {
     }
   };
 
-  // Add an event listener for 'Shift + Delete' or 'Shift + Backspace'
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.shiftKey && (e.key === "Delete" || e.key === "Backspace")) {
@@ -88,6 +89,7 @@ export default function Canvas() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedNode]);
 
   useEffect(() => {
@@ -100,40 +102,43 @@ export default function Canvas() {
   return (
     <div className="playground-parent">
       <div className="controls">
-        <button onClick={addText} style={{ marginBottom: "10px" }}>
+        <Button onClick={addText} style={{ marginBottom: "10px" }}>
           Add Text
-        </button>
+        </Button>
 
-        {/* shadcn/ui Select Component */}
         <Select value={selectedFont} onValueChange={handleFontChange}>
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select Font" />
+            <SelectValue
+              placeholder="Select Font"
+              style={{ fontFamily: selectedFont }}
+            />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="Arial">Arial</SelectItem>
-            <SelectItem value="Times New Roman">Times New Roman</SelectItem>
-            <SelectItem value="Courier New">Courier New</SelectItem>
+            {fontFamilies.map((font) => (
+              <SelectItem
+                key={font.value}
+                value={font.value}
+                style={{ fontFamily: font.value }}
+              >
+                {font.label}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
 
         <Input
           type="color"
+          className="colorpicker"
           value={selectedColor}
           onChange={handleColorChange}
-          style={{ marginLeft: "10px" }}
         />
 
-        <Input
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          style={{ marginLeft: "10px" }}
-        />
+        <Input type="file" accept="image/*" onChange={handleFileChange} />
       </div>
 
       <Stage
-        width={1000}
-        height={700}
+        width={1150}
+        height={600}
         className="playground"
         onMouseDown={(e) => {
           if (e.target === e.target.getStage()) {
@@ -142,7 +147,6 @@ export default function Canvas() {
         }}
       >
         <Layer>
-          {/* Render text items */}
           {textItems.map((item) => (
             <React.Fragment key={item.id}>
               {!item.isEditing ? (
@@ -171,7 +175,6 @@ export default function Canvas() {
                       left: item.x,
                       fontSize: item.fontSize,
                       fontFamily: item.fontFamily,
-                      // fontWeight: "bold",
                       color: item.fill,
                       background: "none",
                       border: "none",
@@ -185,11 +188,10 @@ export default function Canvas() {
             </React.Fragment>
           ))}
 
-          {/* Render uploaded images */}
           {uploadedImages.map((image) => (
             <KonvaImage
               key={image.id}
-              id={image.id} // Ensure the image has an id
+              id={image.id}
               image={image.image}
               x={image.x}
               y={image.y}
@@ -198,7 +200,6 @@ export default function Canvas() {
               draggable
               onClick={(e) => handleSelect(e.target)}
               onDragEnd={(e) => {
-                // Allow image dragging
                 const newX = e.target.x();
                 const newY = e.target.y();
                 setUploadedImages((prev) =>
@@ -210,7 +211,6 @@ export default function Canvas() {
             />
           ))}
 
-          {/* Transformer for resizing/moving selected node */}
           {selectedNode && (
             <Transformer
               ref={transformerRef}

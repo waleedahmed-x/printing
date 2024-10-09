@@ -4,7 +4,6 @@ export default function Home() {
   return (
     <div className="parent">
       <Canvas />
-      <p>Landing</p>
     </div>
   );
 }
