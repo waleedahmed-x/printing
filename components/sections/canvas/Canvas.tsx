@@ -21,45 +21,32 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { fontFamilies } from "@/utils/fontsFamilies";
+import Controls from "@/components/elements/Controls";
 
 export default function Canvas() {
   const transformerRef = useRef<any>(null);
   const [selectedNode, setSelectedNode] = useState<any>(null);
-  const [selectedFont, setSelectedFont] = useState<string>("Arial");
-  const [selectedColor, setSelectedColor] = useState<string>("#000000");
 
   const {
     textItems,
     setTextItems,
     addText,
+    changeFontSize,
     handleTextDoubleClick,
     handleTextChange,
     handleInputBlur,
     handleDragEnd,
-    changeFontFamily,
-    changeTextColor,
+    handleFontChange,
+    handleColorChange,
+    selectedColor,
+    selectedFont,
+    toggleBold,
+    toggleItalic,
+    toggleUnderline,
   } = useText();
+  console.log(textItems);
 
   const { uploadedImages, setUploadedImages, handleFileChange } = useImages();
-
-  const handleSelect = (node: any) => {
-    setSelectedNode(node);
-  };
-
-  const handleFontChange = (font: string) => {
-    setSelectedFont(font);
-    if (selectedNode) {
-      changeFontFamily(selectedNode.id(), font);
-    }
-  };
-
-  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const color = e.target.value;
-    setSelectedColor(color);
-    if (selectedNode) {
-      changeTextColor(selectedNode.id(), color);
-    }
-  };
 
   const handleDeleteSelectedNode = () => {
     if (selectedNode) {
@@ -101,12 +88,15 @@ export default function Canvas() {
 
   return (
     <div className="playground-parent">
-      <div className="controls">
+      <div className="elements">
         <Button onClick={addText} style={{ marginBottom: "10px" }}>
           Add Text
         </Button>
 
-        <Select value={selectedFont} onValueChange={handleFontChange}>
+        <Select
+          value={selectedFont}
+          onValueChange={(value) => handleFontChange(value, selectedNode)}
+        >
           <SelectTrigger className="w-[180px]">
             <SelectValue
               placeholder="Select Font"
@@ -130,100 +120,118 @@ export default function Canvas() {
           type="color"
           className="colorpicker"
           value={selectedColor}
-          onChange={handleColorChange}
+          onChange={(e) => handleColorChange(e, selectedNode)}
         />
-
         <Input type="file" accept="image/*" onChange={handleFileChange} />
       </div>
+      <div className="play-controls">
+        <Controls
+          selectedNode={selectedNode}
+          toggleBold={toggleBold}
+          toggleItalic={toggleItalic}
+          toggleUnderline={toggleUnderline}
+          textItems={textItems}
+          changeFontSize={changeFontSize}
+        />
 
-      <Stage
-        width={1150}
-        height={600}
-        className="playground"
-        onMouseDown={(e) => {
-          if (e.target === e.target.getStage()) {
-            setSelectedNode(null);
-          }
-        }}
-      >
-        <Layer>
-          {textItems.map((item) => (
-            <React.Fragment key={item.id}>
-              {!item.isEditing ? (
-                <Text
-                  id={item.id}
-                  text={item.text}
-                  fontSize={item.fontSize}
-                  fontFamily={item.fontFamily}
-                  fill={item.fill}
-                  x={item.x}
-                  y={item.y}
-                  draggable
-                  onClick={(e) => handleSelect(e.target)}
-                  onDblClick={() => handleTextDoubleClick(item.id)}
-                  onDragEnd={(e) =>
-                    handleDragEnd(item.id, e.target.x(), e.target.y())
-                  }
-                />
-              ) : (
-                <Html>
-                  <input
-                    value={item.text}
-                    style={{
-                      position: "absolute",
-                      top: item.y,
-                      left: item.x,
-                      fontSize: item.fontSize,
-                      fontFamily: item.fontFamily,
-                      color: item.fill,
-                      background: "none",
-                      border: "none",
-                      outline: "none",
-                    }}
-                    onChange={(e) => handleTextChange(item.id, e.target.value)}
-                    onBlur={() => handleInputBlur(item.id)}
+        <Stage
+          width={1150}
+          height={600}
+          className="playground"
+          onMouseDown={(e) => {
+            if (e.target === e.target.getStage()) {
+              setSelectedNode(null);
+            }
+          }}
+        >
+          <Layer>
+            {textItems.map((item) => (
+              <React.Fragment key={item.id}>
+                {!item.isEditing ? (
+                  <Text
+                    id={item.id}
+                    text={item.text}
+                    fontSize={item.fontSize}
+                    fontFamily={item.fontFamily}
+                    fill={item.fill}
+                    x={item.x}
+                    y={item.y}
+                    draggable
+                    onClick={(e) => setSelectedNode(e.target)}
+                    onDblClick={() => handleTextDoubleClick(item.id)}
+                    onDragEnd={(e) =>
+                      handleDragEnd(item.id, e.target.x(), e.target.y())
+                    }
+                    fontStyle={`${item.bold ? "bold" : "normal"} ${
+                      item.italic ? "italic" : "normal"
+                    }`}
+                    textDecoration={item.underlined ? "underline" : "none"}
                   />
-                </Html>
-              )}
-            </React.Fragment>
-          ))}
+                ) : (
+                  <Html>
+                    <input
+                      value={item.text}
+                      style={{
+                        position: "absolute",
+                        top: item.y,
+                        left: item.x,
+                        fontSize: item.fontSize,
+                        fontFamily: item.fontFamily,
+                        color: item.fill,
+                        background: "none",
+                        border: "none",
+                        outline: "none",
+                        fontWeight: item.bold ? "bold" : "normal",
+                        fontStyle: item.italic ? "italic" : "normal",
+                        textDecoration: item.underlined ? "underline" : "none",
+                      }}
+                      onChange={(e) =>
+                        handleTextChange(item.id, e.target.value)
+                      }
+                      onBlur={() => handleInputBlur(item.id)}
+                    />
+                  </Html>
+                )}
+              </React.Fragment>
+            ))}
 
-          {uploadedImages.map((image) => (
-            <KonvaImage
-              key={image.id}
-              id={image.id}
-              image={image.image}
-              x={image.x}
-              y={image.y}
-              width={image.width}
-              height={image.height}
-              draggable
-              onClick={(e) => handleSelect(e.target)}
-              onDragEnd={(e) => {
-                const newX = e.target.x();
-                const newY = e.target.y();
-                setUploadedImages((prev) =>
-                  prev.map((img) =>
-                    img.id === image.id ? { ...img, x: newX, y: newY } : img
-                  )
-                );
-              }}
-            />
-          ))}
+            {uploadedImages.map((image) => (
+              <KonvaImage
+                key={image.id}
+                id={image.id}
+                image={image.image}
+                x={image.x}
+                y={image.y}
+                width={image.width}
+                height={image.height}
+                draggable
+                onClick={(e) => setSelectedNode(e.target)}
+                onDragEnd={(e) => {
+                  const newX = e.target.x();
+                  const newY = e.target.y();
+                  setUploadedImages((prev) =>
+                    prev.map((img) =>
+                      img.id === image.id ? { ...img, x: newX, y: newY } : img
+                    )
+                  );
+                }}
+              />
+            ))}
 
-          {selectedNode && (
-            <Transformer
-              ref={transformerRef}
-              boundBoxFunc={(oldBox, newBox) => {
-                if (newBox.width < 50 || newBox.height < 50) {
-                  return oldBox;
-                }
-                return newBox;
-              }}
-            />
-          )}
-        </Layer>
-      </Stage>
+            {selectedNode && (
+              <Transformer
+                ref={transformerRef}
+                boundBoxFunc={(oldBox, newBox) => {
+                  if (newBox.width < 50 || newBox.height < 50) {
+                    return oldBox;
+                  }
+                  return newBox;
+                }}
+              />
+            )}
+          </Layer>
+        </Stage>
+      </div>
     </div>
   );
 }

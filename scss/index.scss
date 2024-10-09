@@ -29,28 +29,36 @@ $appbarHeight: 70px;
   .playground-parent {
     display: flex;
     justify-content: center;
-    align-items: center;
     padding-top: $appbarHeight;
     width: 100%;
     height: 100vh;
-    .controls {
+    .elements {
       display: flex;
       justify-content: center;
       align-items: center;
       width: 20%;
       flex-direction: column;
       & input {
-        width: 200px;
+        width: 100%;
       }
       & button {
-        width: 200px;
+        width: 100%;
+      }
+      .colorpicker {
+        padding: 5px;
       }
     }
-    .playground {
+    .play-controls {
+      display: flex;
+      flex-direction: column;
+      height: calc(95vh - $appbarHeight);
       width: 80%;
-      height: 600px;
-      border: 1px solid red;
-      background: #ccc;
+      .playground {
+        width: 100%;
+        height: 100%;
+        border: 1px solid red;
+        background: #eaeaea;
+      }
     }
   }
 }

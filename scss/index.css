@@ -30,27 +30,35 @@
 .parent .playground-parent {
   display: flex;
   justify-content: center;
-  align-items: center;
   padding-top: 70px;
   width: 100%;
   height: 100vh;
 }
-.parent .playground-parent .controls {
+.parent .playground-parent .elements {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 20%;
   flex-direction: column;
 }
-.parent .playground-parent .controls input {
-  width: 200px;
+.parent .playground-parent .elements input {
+  width: 100%;
 }
-.parent .playground-parent .controls button {
-  width: 200px;
+.parent .playground-parent .elements button {
+  width: 100%;
 }
-.parent .playground-parent .playground {
+.parent .playground-parent .elements .colorpicker {
+  padding: 5px;
+}
+.parent .playground-parent .play-controls {
+  display: flex;
+  flex-direction: column;
+  height: calc(95vh - 70px);
   width: 80%;
-  height: 600px;
+}
+.parent .playground-parent .play-controls .playground {
+  width: 100%;
+  height: 100%;
   border: 1px solid red;
-  background: #ccc;
+  background: #eaeaea;
 }/*# sourceMappingURL=index.css.map */
