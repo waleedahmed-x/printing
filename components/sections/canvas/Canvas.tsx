@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { fontFamilies } from "@/utils/fontsFamilies";
 import Controls from "@/components/elements/Controls";
 import ImagePicker from "@/components/elements/ImagePicker";
+import { TextIcon } from "@/components/icons/Icons";
 
 export default function Canvas() {
   const transformerRef = useRef<any>(null);
@@ -44,7 +45,6 @@ export default function Canvas() {
     toggleItalic,
     toggleUnderline,
   } = useText();
-  console.log(textItems);
 
   const { uploadedImages, setUploadedImages, handleFileChange } = useImages();
 
@@ -89,9 +89,12 @@ export default function Canvas() {
   return (
     <div className="playground-parent">
       <div className="elements">
-        <Button onClick={addText}>Add Text</Button>
+        <Button onClick={addText}>
+          <TextIcon /> Add Text
+        </Button>
         <Select
           value={selectedFont}
+          disabled={textItems.length === 0}
           onValueChange={(value) => handleFontChange(value, selectedNode)}
         >
           <SelectTrigger className="w-[180px]">

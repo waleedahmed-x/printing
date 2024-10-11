@@ -26,6 +26,7 @@ export default function Controls({
       <Button
         variant="outline"
         size="icon"
+        disabled={textItems.length === 0}
         onClick={() => selectedNode && toggleBold(selectedNode.id())}
       >
         <Bold />
@@ -33,6 +34,7 @@ export default function Controls({
       <Button
         variant="outline"
         size="icon"
+        disabled={textItems.length === 0}
         onClick={() => selectedNode && toggleUnderline(selectedNode.id())}
       >
         <Underline />
@@ -40,6 +42,7 @@ export default function Controls({
       <Button
         variant="outline"
         size="icon"
+        disabled={textItems.length === 0}
         onClick={() => selectedNode && toggleItalic(selectedNode.id())}
       >
         <Italic />
@@ -47,6 +50,7 @@ export default function Controls({
       <Button
         variant="outline"
         size="icon"
+        disabled={textItems.length === 0}
         onClick={() => {
           if (selectedNode) {
             const currentFontSize =
@@ -61,6 +65,7 @@ export default function Controls({
       <Button
         variant="outline"
         size="icon"
+        disabled={textItems.length === 0}
         onClick={() => {
           if (selectedNode) {
             const currentFontSize =
@@ -76,6 +81,7 @@ export default function Controls({
         type="color"
         className="colorpicker"
         value={selectedColor}
+        disabled={textItems.length === 0}
         onChange={(e) => handleColorChange(e, selectedNode)}
       />
     </div>

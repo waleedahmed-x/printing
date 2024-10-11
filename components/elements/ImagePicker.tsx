@@ -1,6 +1,6 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
-import AddImage from "@/components/icons/Icons";
+import { AddImage } from "@/components/icons/Icons";
 import Image from "next/image";
 import { ImagePickerProps } from "@/interfaces/Interfaces";
 
