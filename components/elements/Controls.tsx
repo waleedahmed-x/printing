@@ -25,20 +25,22 @@ export default function Controls({
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
 
+  const disabled = textItems.length === 0;
+
   useEffect(() => {
-    if (selectedNode?.attrs.fontStyle.includes("bold")) {
+    if (selectedNode?.attrs?.fontStyle?.includes("bold")) {
       setIsBold(true);
     } else {
       setIsBold(false);
     }
 
-    if (selectedNode?.attrs.fontStyle.includes("italic")) {
+    if (selectedNode?.attrs?.fontStyle?.includes("italic")) {
       setIsItalic(true);
     } else {
       setIsItalic(false);
     }
 
-    if (selectedNode?.attrs.textDecoration === "underline") {
+    if (selectedNode?.attrs?.textDecoration === "underline") {
       setIsUnderline(true);
     } else {
       setIsUnderline(false);
@@ -50,7 +52,7 @@ export default function Controls({
       <Button
         variant={isBold ? "default" : "outline"}
         size="icon"
-        disabled={textItems.length === 0}
+        disabled={disabled}
         onClick={() => selectedNode && toggleBold(selectedNode.id())}
       >
         <Bold />
@@ -58,7 +60,7 @@ export default function Controls({
       <Button
         variant={isUnderline ? "default" : "outline"}
         size="icon"
-        disabled={textItems.length === 0}
+        disabled={disabled}
         onClick={() => selectedNode && toggleUnderline(selectedNode.id())}
       >
         <Underline />
@@ -66,7 +68,7 @@ export default function Controls({
       <Button
         variant={isItalic ? "default" : "outline"}
         size="icon"
-        disabled={textItems.length === 0}
+        disabled={disabled}
         onClick={() => selectedNode && toggleItalic(selectedNode.id())}
       >
         <Italic />
@@ -74,7 +76,7 @@ export default function Controls({
       <Button
         variant="outline"
         size="icon"
-        disabled={textItems.length === 0}
+        disabled={disabled}
         onClick={() => {
           if (selectedNode) {
             const currentFontSize =
@@ -89,7 +91,7 @@ export default function Controls({
       <Button
         variant="outline"
         size="icon"
-        disabled={textItems.length === 0}
+        disabled={disabled}
         onClick={() => {
           if (selectedNode) {
             const currentFontSize =
@@ -105,7 +107,7 @@ export default function Controls({
         type="color"
         className="colorpicker"
         value={selectedColor}
-        disabled={textItems.length === 0}
+        disabled={disabled}
         onChange={(e) => handleColorChange(e, selectedNode)}
       />
     </div>
