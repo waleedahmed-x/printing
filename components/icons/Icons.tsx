@@ -159,7 +159,7 @@ export function Hamburger() {
   );
 }
 
-export default function ChevronDown() {
+export function ChevronDown() {
   return (
     <svg
       width="15"

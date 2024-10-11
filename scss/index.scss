@@ -33,10 +33,7 @@ $appbarHeight: 70px;
   color: #fff;
   padding: 0.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  .dropdown {
-    display: flex;
-    flex-direction: column;
-  }
+  z-index: 100;
 }
 .parent {
   display: flex;
