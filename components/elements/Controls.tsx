@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import {
   Bold,
@@ -21,10 +21,34 @@ export default function Controls({
   selectedColor,
   handleColorChange,
 }: ControlsProps) {
+  const [isBold, setIsBold] = useState(false);
+  const [isItalic, setIsItalic] = useState(false);
+  const [isUnderline, setIsUnderline] = useState(false);
+
+  useEffect(() => {
+    if (selectedNode?.attrs.fontStyle.includes("bold")) {
+      setIsBold(true);
+    } else {
+      setIsBold(false);
+    }
+
+    if (selectedNode?.attrs.fontStyle.includes("italic")) {
+      setIsItalic(true);
+    } else {
+      setIsItalic(false);
+    }
+
+    if (selectedNode?.attrs.textDecoration === "underline") {
+      setIsUnderline(true);
+    } else {
+      setIsUnderline(false);
+    }
+  }, [selectedNode, textItems]);
+
   return (
     <div className="controls">
       <Button
-        variant="outline"
+        variant={isBold ? "default" : "outline"}
         size="icon"
         disabled={textItems.length === 0}
         onClick={() => selectedNode && toggleBold(selectedNode.id())}
@@ -32,7 +56,7 @@ export default function Controls({
         <Bold />
       </Button>
       <Button
-        variant="outline"
+        variant={isUnderline ? "default" : "outline"}
         size="icon"
         disabled={textItems.length === 0}
         onClick={() => selectedNode && toggleUnderline(selectedNode.id())}
@@ -40,7 +64,7 @@ export default function Controls({
         <Underline />
       </Button>
       <Button
-        variant="outline"
+        variant={isItalic ? "default" : "outline"}
         size="icon"
         disabled={textItems.length === 0}
         onClick={() => selectedNode && toggleItalic(selectedNode.id())}

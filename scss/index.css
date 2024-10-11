@@ -112,6 +112,7 @@ body::-webkit-scrollbar {
   justify-content: flex-start;
   align-items: center;
   height: 50px;
+  background-color: #000;
 }
 .parent .playground-parent .play-controls .controls .colorpicker {
   padding: 5px;
