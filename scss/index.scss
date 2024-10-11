@@ -2,15 +2,34 @@
   margin: 0px;
   padding: 0px;
 }
+// ? Scrollbar none to all browser
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scrollbar-width: thin;
+  scrollbar-width: none;
+}
+body::-webkit-scrollbar {
+  display: none;
+}
+// ? Scrollbar none to all browser
 $appbarHeight: 70px;
 .appbar {
   display: flex;
   position: fixed;
   width: 100%;
   height: $appbarHeight;
-  //   justify-content: space-between;
   align-items: center;
-  background-color: #333;
+  background-color: #171717;
   color: #fff;
   padding: 0.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);

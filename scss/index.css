@@ -3,13 +3,34 @@
   padding: 0px;
 }
 
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scrollbar-width: thin;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .appbar {
   display: flex;
   position: fixed;
   width: 100%;
   height: 70px;
   align-items: center;
-  background-color: #333;
+  background-color: #171717;
   color: #fff;
   padding: 0.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
