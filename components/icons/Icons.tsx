@@ -89,3 +89,32 @@ export function Underline() {
     </svg>
   );
 }
+
+export default function AddImage() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width="48"
+      height="48"
+      fill="none"
+      stroke="#ccc"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect
+        x="2"
+        y="2"
+        width="20"
+        height="20"
+        rx="2"
+        ry="2"
+        stroke="#ccc"
+        fill="none"
+      ></rect>
+      <circle cx="8" cy="8" r="2" fill="#ccc"></circle>
+      <path d="M4 20L10 13L14 17L16 15L20 20" stroke="#ccc"></path>
+    </svg>
+  );
+}

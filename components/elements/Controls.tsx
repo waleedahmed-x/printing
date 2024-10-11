@@ -7,17 +7,9 @@ import {
   Italic,
   Underline,
 } from "@/components/icons/Icons";
-import { TextItem } from "@/hooks/useText";
-import Konva from "konva";
+import { Input } from "@/components/ui/input";
+import { ControlsProps } from "@/interfaces/Interfaces";
 
-interface ControlsProps {
-  selectedNode: Konva.Node | null;
-  toggleBold: (id: string) => void;
-  toggleUnderline: (id: string) => void;
-  toggleItalic: (id: string) => void;
-  textItems: TextItem[];
-  changeFontSize: (id: string, newSize: number) => void;
-}
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Controls({
   selectedNode,
@@ -26,6 +18,8 @@ export default function Controls({
   toggleItalic,
   textItems,
   changeFontSize,
+  selectedColor,
+  handleColorChange,
 }: ControlsProps) {
   return (
     <div className="controls">
@@ -78,6 +72,12 @@ export default function Controls({
       >
         <FontIncrease />
       </Button>
+      <Input
+        type="color"
+        className="colorpicker"
+        value={selectedColor}
+        onChange={(e) => handleColorChange(e, selectedNode)}
+      />
     </div>
   );
 }

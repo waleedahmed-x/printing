@@ -1,14 +1,6 @@
 "use client";
+import { UploadedImage } from "@/interfaces/Interfaces";
 import { useState } from "react";
-
-export interface UploadedImage {
-  id: string;
-  image: HTMLImageElement;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
 
 export function useImages() {
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);

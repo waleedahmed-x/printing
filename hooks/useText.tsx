@@ -1,26 +1,12 @@
+import { TextItem } from "@/interfaces/Interfaces";
 import Konva from "konva";
 import { useState } from "react";
-
-export interface TextItem {
-  id: string;
-  text: string;
-  x: number;
-  y: number;
-  fontSize: number;
-  fontFamily: string;
-  bold: boolean;
-  italic: boolean;
-  underlined: boolean;
-  fill: string;
-  isEditing: boolean;
-}
 
 export function useText() {
   const [textItems, setTextItems] = useState<TextItem[]>([]);
   const [selectedColor, setSelectedColor] = useState<string>("#000000");
   const [selectedFont, setSelectedFont] = useState<string>("Arial");
 
-  // Add new text item
   const addText = () => {
     const newText: TextItem = {
       id: Date.now().toString(),

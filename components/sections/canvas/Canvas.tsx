@@ -11,7 +11,6 @@ import {
 import { Html } from "react-konva-utils";
 import { useText } from "@/hooks/useText";
 import { useImages } from "@/hooks/useImage";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -22,6 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { fontFamilies } from "@/utils/fontsFamilies";
 import Controls from "@/components/elements/Controls";
+import ImagePicker from "@/components/elements/ImagePicker";
 
 export default function Canvas() {
   const transformerRef = useRef<any>(null);
@@ -89,10 +89,7 @@ export default function Canvas() {
   return (
     <div className="playground-parent">
       <div className="elements">
-        <Button onClick={addText} style={{ marginBottom: "10px" }}>
-          Add Text
-        </Button>
-
+        <Button onClick={addText}>Add Text</Button>
         <Select
           value={selectedFont}
           onValueChange={(value) => handleFontChange(value, selectedNode)}
@@ -115,14 +112,10 @@ export default function Canvas() {
             ))}
           </SelectContent>
         </Select>
-
-        <Input
-          type="color"
-          className="colorpicker"
-          value={selectedColor}
-          onChange={(e) => handleColorChange(e, selectedNode)}
+        <ImagePicker
+          handleFileChange={handleFileChange}
+          uploadedImages={uploadedImages}
         />
-        <Input type="file" accept="image/*" onChange={handleFileChange} />
       </div>
       <div className="play-controls">
         <Controls
@@ -132,11 +125,13 @@ export default function Canvas() {
           toggleUnderline={toggleUnderline}
           textItems={textItems}
           changeFontSize={changeFontSize}
+          selectedColor={selectedColor}
+          handleColorChange={handleColorChange}
         />
 
         <Stage
-          width={1150}
-          height={600}
+          width={1140}
+          height={700}
           className="playground"
           onMouseDown={(e) => {
             if (e.target === e.target.getStage()) {
