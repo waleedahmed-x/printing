@@ -2,7 +2,6 @@
   margin: 0px;
   padding: 0px;
 }
-// ? Scrollbar none to all browser
 * {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -21,7 +20,6 @@ html {
 body::-webkit-scrollbar {
   display: none;
 }
-// ? Scrollbar none to all browser
 $appbarHeight: 70px;
 .appbar {
   display: flex;
@@ -54,6 +52,7 @@ $appbarHeight: 70px;
       align-items: center;
       width: 20%;
       flex-direction: column;
+      background: #000;
       .imagepicker-parent {
         position: relative;
         display: flex;
@@ -61,7 +60,8 @@ $appbarHeight: 70px;
         justify-content: center;
         width: 100%;
         height: 160px;
-        border: 2px dashed #d1d5db;
+        background-color: rgba(255, 255, 255, 0.2);
+        border: 2px dashed #fff;
         border-radius: 8px;
         &:hover {
           border: 2px dashed #f3f4f6;
@@ -81,19 +81,21 @@ $appbarHeight: 70px;
           align-items: center;
           color: #a8aeb9;
           z-index: 2;
+          opacity: 0.5;
         }
       }
       & input {
         width: 100%;
       }
       & button {
+        background: white;
+        color: black;
         width: 100%;
       }
     }
     .play-controls {
       display: flex;
       flex-direction: column;
-      // justify-content: center;
       justify-content: space-between;
       height: calc(95vh - $appbarHeight);
       width: 80%;

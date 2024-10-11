@@ -32,7 +32,7 @@ export default function ImagePicker({
       )}
       <div className="icon-text">
         <AddImage />
-        <span className="text-sm font-semibold">
+        <span className="text-sm font-semibold text-white">
           {hasImages ? "Add another" : "Add Image"}
         </span>
       </div>

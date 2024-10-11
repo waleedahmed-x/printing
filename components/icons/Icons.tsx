@@ -98,7 +98,7 @@ export function AddImage() {
       width="48"
       height="48"
       fill="none"
-      stroke="#ccc"
+      stroke="#fff"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -110,11 +110,11 @@ export function AddImage() {
         height="20"
         rx="2"
         ry="2"
-        stroke="#ccc"
+        stroke="#fff"
         fill="none"
       ></rect>
-      <circle cx="8" cy="8" r="2" fill="#ccc"></circle>
-      <path d="M4 20L10 13L14 17L16 15L20 20" stroke="#ccc"></path>
+      <circle cx="8" cy="8" r="2" fill="#fff"></circle>
+      <path d="M4 20L10 13L14 17L16 15L20 20" stroke="#fff"></path>
     </svg>
   );
 }

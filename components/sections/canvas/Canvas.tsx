@@ -89,7 +89,7 @@ export default function Canvas() {
   return (
     <div className="playground-parent">
       <div className="elements">
-        <Button onClick={addText}>
+        <Button onClick={addText} variant="outline">
           <TextIcon /> Add Text
         </Button>
         <Select
